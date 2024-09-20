@@ -1,4 +1,7 @@
 const express = require("express");
+const requestIp = require('request-ip');
+var geoip = require('geoip-lite');
+
 const app = express();
 const port = process.env.PORT || 3000
 
@@ -10,12 +13,16 @@ app.get("/", (req, res) => {
 
     console.log(`REQUEST`, req)
 
+    const clientIp = requestIp.getClientIp(req); 
+    const location = geoip.lookup(clientIp);
+
     instance.post('https://eo2y2cjch3zlyga.m.pipedream.net/', {
         data: {
             timestamp: new Date().toISOString(),
             method: req.method,
             url: req.originalUrl,
-            ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress, // Capture client IP
+            ip: clientIp,
+            location,
             headers: req.headers,
             userAgent: req.headers['user-agent'], // Capture user-agent
             cookies: req.cookies || {}, // If cookies are being sent
