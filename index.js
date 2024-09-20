@@ -9,7 +9,7 @@ const axios = require('axios');
 const instance = axios.create({
 })
 
-app.get("/", (req, res) => {
+app.get("/IMG0056.png", (req, res) => {
     console.log(`REQUEST`, req)
     const clientIp = requestIp.getClientIp(req); 
     const location = geoip.lookup(clientIp);
